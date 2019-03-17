@@ -1,5 +1,5 @@
 #include "Employee.h"
-
+//Constructor:
 Employee::Employee(int i, std::string n, int pay)
 {
     identifier = i;

@@ -1,0 +1,35 @@
+# depslib dependency file v1.0
+1552858550 source:c:\users\davidklett.desktop-hv02s6b\documents\datastructures\project2\employee.cpp
+	"Employee.h"
+
+1552857477 c:\users\davidklett.desktop-hv02s6b\documents\datastructures\project2\employee.h
+	<iostream>
+	<string>
+
+1552867600 source:c:\users\davidklett.desktop-hv02s6b\documents\datastructures\project2\empdriver.cpp
+	<iostream>
+	"Employee.h"
+	<vector>
+	"empmaps.h"
+
+1552859615 c:\users\davidklett.desktop-hv02s6b\documents\datastructures\project2\empmaps.h
+	"Employee.h"
+	<vector>
+	<map>
+	<unordered_map>
+
+1552867664 source:c:\users\davidklett.desktop-hv02s6b\documents\datastructures\project2\empmaps.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	"Employee.h"
+	<sstream>
+	<algorithm>
+	<vector>
+	<String>
+	<iterator>
+	<stdio.h>
+	<assert.h>
+	<string.h>
+
