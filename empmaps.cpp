@@ -12,12 +12,8 @@ using namespace std;
 #include <vector>
 #include "Employee.h"
 #include <sstream>
-#include <algorithm>
-#include <vector>
-#include <String>
 #include <iterator>
 #include <stdio.h>
-#include <assert.h>
 #include <string.h>
 #include <map>
 #include <unordered_map>
@@ -111,6 +107,7 @@ map<int,vector<Employee>> mapSalRange(vector<Employee> & emp)
         int salary = emp[i].sal();
         ss << salary;
         int salRange = (salary/10000)*10000;
+
         myMap[salRange].push_back(emp[i]);
     }
     stop = clock ();
