@@ -32,7 +32,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="Employee.cpp" />
+		<Unit filename="Employee.h" />
+		<Unit filename="empdriver.cpp" />
+		<Unit filename="empmaps.cpp" />
+		<Unit filename="empmaps.h" />
+		<Unit filename="testRecords.dat" />
 		<Extensions>
 			<code_completion />
 			<envvars />

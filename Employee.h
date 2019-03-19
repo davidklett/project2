@@ -1,3 +1,5 @@
+//David Klett
+//Data Structures Project 2
 #ifndef EMPLOYEE_H_INCLUDED
 #define EMPLOYEE_H_INCLUDED
 #include <iostream>

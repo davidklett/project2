@@ -1,7 +1,5 @@
 //cpp file for empmaps
 //David Klett
-
-
 /*
 This function builds and returns a vector of employees using the Employee class file. You can prompt
 the user for the input file in this function. Give the user a nice error message if the input file does not
@@ -22,6 +20,9 @@ using namespace std;
 #include <assert.h>
 #include <string.h>
 #include <map>
+#include <unordered_map>
+#include <ctime>
+
 //function to split string:
 
 /*
@@ -34,24 +35,31 @@ vector<Employee> employees(){
     std::cout << "Enter input file name:";
     std::cin >> x;
     //if input fails, have error code
-    std::ifstream in("records.dat"); //use x variable instead of hardcoded string
+    std::ifstream in(x); //use x variable instead of hardcoded string
+    //if user input is invalid:
+    if(in.fail()){
+        //output error message:
+        std::cout << "Error: File not found.";
+        exit(0);
+    }
     std::vector <Employee> employees;
     std::string line;
+
     //Read the next line from the file until it reaches the end
     while(std::getline(in, line))
     {
-        //Parse the string into three elements in a vector:
-        std::istringstream iss(line);
-        std::vector<std::string> splittedStrings(std::istream_iterator<std::string>{iss},
+    //Parse the string into three elements in a vector:
+    std::istringstream iss(line);
+    std::vector<std::string> splittedStrings(std::istream_iterator<std::string>{iss},
                                  std::istream_iterator<std::string>());
 
-        int x = stoi(splittedStrings[0]);
-        std::string y = splittedStrings[1];
-        int z = stoi(splittedStrings[2]);
-        Employee e(x,y,z);
-        employees.push_back(e);
+    int x = stoi(splittedStrings[0]);
+    std::string y = splittedStrings[1];
+    int z = stoi(splittedStrings[2]);
+    Employee e(x,y,z);
+    employees.push_back(e);
     }
-
+    std::cout << "Number of employees are: " << employees.size() << std::endl;
     return employees;
 }
 
@@ -66,7 +74,8 @@ std::map<int,vector<Employee>> mapEmpDept(vector<Employee> & emp)
 {
     int employeeSize = emp.size();
     std::map<int, vector<Employee>> myMap;
-
+    clock_t start, stop;
+    start = clock ();
     for(int i = 0; i < employeeSize; ++i)
     {
         stringstream ss;
@@ -75,7 +84,10 @@ std::map<int,vector<Employee>> mapEmpDept(vector<Employee> & emp)
         int firstFourNumbers = atoi(ss.str().substr(0, 4).c_str());
         myMap[firstFourNumbers].push_back(emp[i]);
     }
-
+    stop = clock ();
+    std::cout << "ORDERED Map creation with department as key clock ticks: " << double(stop-start);
+    std::cout << std::endl;
+    std::cout << "ORDERED Map number of departments: " << myMap.size() << std::endl;
     return myMap;
 }
 
@@ -91,16 +103,20 @@ map<int,vector<Employee>> mapSalRange(vector<Employee> & emp)
 {
     int employeeSize = emp.size();
     std::map<int, vector<Employee>> myMap;
-
+    clock_t start, stop;
+    start = clock ();
     for(int i = 0; i < employeeSize; ++i)
     {
         stringstream ss;
         int salary = emp[i].sal();
         ss << salary;
         int salRange = (salary/10000)*10000;
-        //cout << salRange << endl;
         myMap[salRange].push_back(emp[i]);
     }
+    stop = clock ();
+    std::cout << "ORDERED Map creation with salary as key clock ticks: " << double(stop-start);
+    std::cout << std::endl;
+    std::cout << "ORDERED Map number of salary ranges: " << myMap.size() << std::endl;
     return myMap;
 }
 
@@ -117,7 +133,7 @@ void printSalRange(map<int,vector<Employee>> & salRange)
     int mostEmpNumber = 0;
     for(auto const& pair: salRange)
     {
-        cout << "Salary Range: " << pair.first;
+        cout << "ORDERED Map Salary Range: " << pair.first;
         cout << " # employees is " << pair.second.size();
         cout << endl;
         if(pair.second.size() > mostEmpNumber)
@@ -127,7 +143,79 @@ void printSalRange(map<int,vector<Employee>> & salRange)
         }
 
     }
-    cout << endl;
-    cout << "The sal range with most employees is " << mostEmp;
-    cout << endl << "with " << mostEmpNumber << " employees.";
+    cout << "ORDERED Map Salary Range with most employees is " << mostEmp;
+    cout << " containing " << mostEmpNumber << " employees";
+    cout << endl << endl;
+}
+
+/*
+This is identical to the mapEmpDept but returns an unordered_map.
+*/
+unordered_map<int,vector<Employee>> umapEmpDept(vector<Employee> & emp)
+{
+    int employeeSize = emp.size();
+    unordered_map<int, vector<Employee>> myMap;
+    clock_t start, stop;
+    start = clock ();
+    for(int i = 0; i < employeeSize; ++i)
+    {
+        stringstream ss;
+        int number = emp[i].id();
+        ss << number;
+        int firstFourNumbers = atoi(ss.str().substr(0, 4).c_str());
+        myMap[firstFourNumbers].push_back(emp[i]);
+    }
+    stop = clock ();
+    std::cout << "UNORDERED Map creation with department as key clock ticks: " << double(stop-start);
+    std::cout << std::endl;
+    std::cout << "UNORDERED Map number of departments: " << myMap.size() << std::endl;
+
+    return myMap;
+}
+/*
+This is identical to the umapSalRange but returns an unordered_map.
+*/
+unordered_map<int,vector<Employee>> umapSalRange(vector<Employee> & emp)
+{
+    int employeeSize = emp.size();
+    unordered_map<int, vector<Employee>> myMap;
+    clock_t start, stop;
+    start = clock ();
+    for(int i = 0; i < employeeSize; ++i)
+    {
+        stringstream ss;
+        int salary = emp[i].sal();
+        ss << salary;
+        int salRange = (salary/10000)*10000;
+        myMap[salRange].push_back(emp[i]);
+    }
+    stop = clock ();
+    std::cout << "UNORDERED Map creation with salary as key clock ticks: " << double(stop-start);
+    std::cout << std::endl;
+    std::cout << "UNORDERED Map number of salary ranges: " << myMap.size() << std::endl;
+    return myMap;
+}
+
+/*
+This is identical to the printSalRange but uses an unordered_map parameter.
+*/
+void uprintSalRange(unordered_map<int,vector<Employee>> & salRange)
+{
+    int mostEmp = 0; //initialize to zero
+    int mostEmpNumber = 0;
+    for(auto const& pair: salRange)
+    {
+        cout << "UNORDERED Map Salary Range: " << pair.first;
+        cout << " # employees is " << pair.second.size();
+        cout << endl;
+        if(pair.second.size() > mostEmpNumber)
+        {
+             mostEmp = pair.first;
+             mostEmpNumber = pair.second.size();
+        }
+
+    }
+    cout << "UNORDERED Map Salary Range with most employees is " << mostEmp;
+    cout << " containing " << mostEmpNumber << " employees";
+    cout << endl << endl;
 }

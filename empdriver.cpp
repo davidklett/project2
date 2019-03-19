@@ -1,4 +1,3 @@
-
 //Data Structures Project 2:
 //David Klett dgk10 Mar.17/19
 #include <iostream>
@@ -10,18 +9,15 @@ using namespace std;
 
 int main()
 {
-    vector<Employee> x;
-    x = employees();
-    //cout << x[7].id(); //works!
-    map <int, vector<Employee> > suh;
-
-    suh = mapSalRange(x); //works!!!
-    int n = suh[50000].size();
-    for(int i = 0; i < n; ++i)
-    {
-        //cout << suh[50000][i].name();
-        //cout << endl;
-    }
-    printSalRange(suh); //works!
+    vector<Employee> empObj;
+    empObj = employees();
+    map <int, vector<Employee> > emp1;
+    emp1 = mapEmpDept(empObj);
+    emp1 = mapSalRange(empObj); //works!!!
+    printSalRange(emp1); //works!
+    unordered_map <int, vector<Employee> > emp2;
+    emp2 = umapEmpDept(empObj);
+    emp2 = umapSalRange(empObj);
+    uprintSalRange(emp2);
     return 0;
 }

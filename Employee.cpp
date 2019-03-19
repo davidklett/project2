@@ -1,3 +1,5 @@
+//David Klett
+//Data Structures Project 2
 #include "Employee.h"
 //Constructor:
 Employee::Employee(int i, std::string n, int pay)
